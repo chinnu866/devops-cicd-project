@@ -11,13 +11,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t cicd-app .'
+                bat 'docker build -t cicd-app .'
             }
         }
 
         stage('Deploy to EC2') {
             steps {
-                sh 'echo Deploying to EC2'
+                bat 'docker run -d -p 80:80 cicd-app'
             }
         }
 
