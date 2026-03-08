@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/chinnu866/devops-cicd-project.git'
+                git branch: 'main', url: 'https://github.com/chinnu866/devops-cicd-project.git'
             }
         }
 
@@ -17,7 +17,7 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sh 'echo Deploying...'
+                sh 'echo Deploying to EC2'
             }
         }
 
