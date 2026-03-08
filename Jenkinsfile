@@ -15,11 +15,17 @@ pipeline {
             }
         }
 
-        stage('Run Container') {
+        stage('Deploy to EC2') {
             steps {
-                sh 'docker stop cicd-container || true'
-                sh 'docker rm cicd-container || true'
-                sh 'docker run -d -p 80:80 --name cicd-container cicd-app'
+                sshagent(['ec2-key']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@15.206.124.10 "
+                    docker stop cicd-container || true
+                    docker rm cicd-container || true
+                    docker run -d -p 80:80 --name cicd-container cicd-app
+                    "
+                    '''
+                }
             }
         }
 
